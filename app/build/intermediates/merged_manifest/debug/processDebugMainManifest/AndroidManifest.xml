@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.lookawayshield"
+    package="com.example.lookawayshield.clean"
     android:versionCode="2"
-    android:versionName="0.2" >
+    android:versionName="1.0-clean" >
 
     <uses-sdk
         android:minSdkVersion="29"
@@ -14,10 +14,10 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
 
     <permission
-        android:name="com.example.lookawayshield.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:name="com.example.lookawayshield.clean.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.example.lookawayshield.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" /> <!-- Although the *SdkVersion is captured in gradle build files, this is required for non gradle builds -->
+    <uses-permission android:name="com.example.lookawayshield.clean.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" /> <!-- Although the *SdkVersion is captured in gradle build files, this is required for non gradle builds -->
     <!-- <uses-sdk android:minSdkVersion="14"/> -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -27,7 +27,7 @@
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:debuggable="true"
         android:extractNativeLibs="false"
-        android:label="Look Away Shield"
+        android:label="Look Away Shield Clean"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
@@ -69,12 +69,12 @@
 
         <provider
             android:name="com.google.mlkit.common.internal.MlKitInitProvider"
-            android:authorities="com.example.lookawayshield.mlkitinitprovider"
+            android:authorities="com.example.lookawayshield.clean.mlkitinitprovider"
             android:exported="false"
             android:initOrder="99" />
         <provider
             android:name="androidx.startup.InitializationProvider"
-            android:authorities="com.example.lookawayshield.androidx-startup"
+            android:authorities="com.example.lookawayshield.clean.androidx-startup"
             android:exported="false" >
             <meta-data
                 android:name="androidx.emoji2.text.EmojiCompatInitializer"

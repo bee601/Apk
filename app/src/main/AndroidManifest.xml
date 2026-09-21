@@ -6,7 +6,7 @@
 
     <application
         android:theme="@style/AppTheme"
-        android:label="Look Away Shield"
+        android:label="Look Away Shield Clean"
         android:allowBackup="false"
         android:supportsRtl="true">
         <activity

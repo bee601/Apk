@@ -4,7 +4,7 @@
     <LinearLayout android:id="@+id/content" android:layout_width="match_parent"
         android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp">
         <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="LOOK AWAY SHIELD  /  PRIVATE MODE" android:textColor="#A8B3C7" android:textSize="12sp"
+            android:text="LOOK AWAY SHIELD CLEAN  /  PRIVATE MODE" android:textColor="#A8B3C7" android:textSize="12sp"
             android:letterSpacing="0.16" android:textStyle="bold"/>
         <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginTop="8dp" android:text="Privacy, with your own visual language."
