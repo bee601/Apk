@@ -43,6 +43,10 @@ class MainActivity : ComponentActivity() {
                 Uri.parse("package:$packageName")))
         }
 
+        findViewById<Button>(R.id.targetPermissionButton).setOnClickListener {
+            startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+        }
+
         findViewById<Button>(R.id.imageButton).setOnClickListener {
             startActivityForResult(
                 Intent(Intent.ACTION_OPEN_DOCUMENT).apply {

@@ -13,5 +13,6 @@ id styleAurora
 id styleGroup
 id styleMidnight
 id stylePaper
+id targetPermissionButton
 layout activity_main
 style AppTheme

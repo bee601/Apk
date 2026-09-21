@@ -4,6 +4,8 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.app.usage.UsageEvents
+import android.app.usage.UsageStatsManager
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.graphics.BitmapFactory
@@ -35,6 +37,7 @@ class ShieldService : Service() {
     private val handler = Handler(Looper.getMainLooper())
     private var style = "midnight"
     private var color = Color.parseColor("#7C5CFC")
+    private var targetAppActive = false
     private var imageUri: String? = null
 
     override fun onCreate() {
@@ -55,6 +58,7 @@ class ShieldService : Service() {
         color = runCatching { Color.parseColor(intent?.getStringExtra(EXTRA_COLOR) ?: "#7C5CFC") }
             .getOrDefault(Color.parseColor("#7C5CFC"))
         addShield(imageUri)
+        scheduleTargetAppCheck()
         return START_STICKY
     }
 
@@ -102,6 +106,32 @@ class ShieldService : Service() {
 
     private fun withAlpha(value: Int, alpha: Int): Int = (value and 0x00FFFFFF) or (alpha shl 24)
 
+    private fun scheduleTargetAppCheck() {
+        handler.post(object : Runnable {
+            override fun run() {
+                val active = isTargetAppInForeground()
+                if (active != targetAppActive) {
+                    targetAppActive = active
+                    if (!active) animateShield(false)
+                }
+                handler.postDelayed(this, 700)
+            }
+        })
+    }
+
+    private fun isTargetAppInForeground(): Boolean {
+        val manager = getSystemService(USAGE_STATS_SERVICE) as UsageStatsManager
+        val events = manager.queryEvents(System.currentTimeMillis() - 3000, System.currentTimeMillis())
+        val event = UsageEvents.Event()
+        var currentPackage = ""
+        while (events.hasNextEvent()) {
+            events.getNextEvent(event)
+            if (event.eventType == UsageEvents.Event.MOVE_TO_FOREGROUND) currentPackage = event.packageName
+        }
+        val targetPackages = setOf("com.snapchat.android", "com.google.android.youtube", "com.instagram.android")
+        return targetPackages.contains(currentPackage) || currentPackage.contains("launcher")
+    }
+
     private fun animateShield(on: Boolean) {
         val v = shield ?: return
         handler.post {
@@ -140,7 +170,7 @@ class ShieldService : Service() {
                     val right = face?.rightEyeOpenProbability ?: 0f
                     val rot = face?.headEulerAngleY ?: 999f
                     val looking = face != null && left > 0.35f && right > 0.35f && abs(rot) < 18f
-                    if (!looking) {
+                    if (!looking && targetAppActive) {
                         if (awaySince == 0L) awaySince = SystemClock.uptimeMillis()
                         if (!lastAway && SystemClock.uptimeMillis() - awaySince > 280) {
                             lastAway = true; animateShield(true)

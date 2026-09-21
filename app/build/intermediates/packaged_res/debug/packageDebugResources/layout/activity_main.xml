@@ -42,6 +42,9 @@
         <Button android:id="@+id/permissionButton" android:layout_width="match_parent"
             android:layout_height="wrap_content" android:layout_marginTop="10dp"
             android:text="Set up permissions"/>
+        <Button android:id="@+id/targetPermissionButton" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="10dp"
+            android:text="Allow target-app detection"/>
         <Button android:id="@+id/startButton" android:layout_width="match_parent"
             android:layout_height="wrap_content" android:layout_marginTop="10dp"
             android:text="Start Shield"/>
