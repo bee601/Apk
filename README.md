@@ -11,6 +11,7 @@ This is a prototype Android project for a gaze-triggered privacy shield.
 - The setup screen shows permission state and uses a short entrance animation.
 - Three shield styles are available: Midnight, Aurora, and Paper, each accepting a custom hex accent.
 - Protection is limited to Snapchat, YouTube, Instagram, and launcher apps; other apps are left untouched.
+- An optional Home launcher lists installed apps without replacing the current launcher automatically. Existing widgets cannot be copied by Android; they must be added again in a launcher that hosts widgets.
 
 ## Important limitation
 A normal third-party Android app cannot reliably blur the actual pixels rendered by every other app. This prototype therefore uses a fullscreen overlay. It is visually similar to a privacy blur but does not capture and Gaussian-blur the underlying app.

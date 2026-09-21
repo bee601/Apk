@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:1:1-26:12
-INJECTED from /workspaces/Apk/app/src/main/AndroidManifest.xml:1:1-26:12
-INJECTED from /workspaces/Apk/app/src/main/AndroidManifest.xml:1:1-26:12
-INJECTED from /workspaces/Apk/app/src/main/AndroidManifest.xml:1:1-26:12
+ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:1:1-36:12
+INJECTED from /workspaces/Apk/app/src/main/AndroidManifest.xml:1:1-36:12
+INJECTED from /workspaces/Apk/app/src/main/AndroidManifest.xml:1:1-36:12
+INJECTED from /workspaces/Apk/app/src/main/AndroidManifest.xml:1:1-36:12
 MERGED from [com.google.android.material:material:1.12.0] /home/codespace/.gradle/caches/9.7.1/transforms/97f58a8df6bbdff758c974bf9782916d/transformed/material-1.12.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.camera:camera-video:1.4.1] /home/codespace/.gradle/caches/9.7.1/transforms/488eedd2dda62329a7af758a8388e897/transformed/camera-video-1.4.1/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.camera:camera-lifecycle:1.4.1] /home/codespace/.gradle/caches/9.7.1/transforms/d2384e9ee11f3427a24cf1ca91f90b5b/transformed/camera-lifecycle-1.4.1/AndroidManifest.xml:2:1-7:12
@@ -95,8 +95,8 @@ ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:6:5-77
 	android:name
 		ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:6:22-75
 application
-ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:8:5-25:19
-INJECTED from /workspaces/Apk/app/src/main/AndroidManifest.xml:8:5-25:19
+ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:8:5-35:19
+INJECTED from /workspaces/Apk/app/src/main/AndroidManifest.xml:8:5-35:19
 MERGED from [com.google.android.material:material:1.12.0] /home/codespace/.gradle/caches/9.7.1/transforms/97f58a8df6bbdff758c974bf9782916d/transformed/material-1.12.0/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.12.0] /home/codespace/.gradle/caches/9.7.1/transforms/97f58a8df6bbdff758c974bf9782916d/transformed/material-1.12.0/AndroidManifest.xml:22:5-20
 MERGED from [androidx.camera:camera-camera2:1.4.1] /home/codespace/.gradle/caches/9.7.1/transforms/d5cc2e5964febf0fdecfb9afb3edbd46/transformed/camera-camera2-1.4.1/AndroidManifest.xml:23:5-34:19
@@ -163,14 +163,32 @@ category#android.intent.category.LAUNCHER
 ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:18:17-76
 	android:name
 		ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:18:27-74
-service#com.example.lookawayshield.ShieldService
-ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:21:9-24:53
+activity#com.example.lookawayshield.LauncherActivity
+ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:21:9-30:20
+	android:label
+		ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:24:13-50
 	android:exported
-		ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:23:13-37
-	android:foregroundServiceType
-		ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:24:13-51
+		ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:23:13-36
 	android:name
-		ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:22:13-42
+		ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:22:13-45
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.DEFAULT+category:name:android.intent.category.HOME
+ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:25:13-29:29
+category#android.intent.category.HOME
+ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:27:17-73
+	android:name
+		ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:27:27-70
+category#android.intent.category.DEFAULT
+ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:28:17-76
+	android:name
+		ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:28:27-73
+service#com.example.lookawayshield.ShieldService
+ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:31:9-34:53
+	android:exported
+		ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:33:13-37
+	android:foregroundServiceType
+		ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:34:13-51
+	android:name
+		ADDED from /workspaces/Apk/app/src/main/AndroidManifest.xml:32:13-42
 uses-sdk
 INJECTED from /workspaces/Apk/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /workspaces/Apk/app/src/main/AndroidManifest.xml
