@@ -3208,7 +3208,6 @@ id endToStart
 id enterAlways
 id enterAlwaysCollapsed
 id escape
-id excludedPackages
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
@@ -3509,7 +3508,6 @@ id unchecked
 id uniform
 id unlabeled
 id up
-id usagePermissionButton
 id useLogo
 id view_offset_helper
 id view_tree_lifecycle_owner

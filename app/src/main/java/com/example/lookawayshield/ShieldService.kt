@@ -4,8 +4,6 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.app.usage.UsageEvents
-import android.app.usage.UsageStatsManager
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.graphics.BitmapFactory
@@ -28,7 +26,6 @@ class ShieldService : Service() {
         const val EXTRA_IMAGE_URI = "shield_image_uri"
         const val EXTRA_STYLE = "shield_style"
         const val EXTRA_COLOR = "shield_color"
-        const val EXTRA_EXCLUDED_PACKAGES = "excluded_packages"
     }
     private lateinit var wm: WindowManager
     private var shield: View? = null
@@ -39,8 +36,6 @@ class ShieldService : Service() {
     private var style = "midnight"
     private var color = Color.parseColor("#7C5CFC")
     private var imageUri: String? = null
-    private var excludedPackages = emptySet<String>()
-    private var pausedForSensitiveApp = false
 
     override fun onCreate() {
         super.onCreate()
@@ -59,10 +54,7 @@ class ShieldService : Service() {
         style = intent?.getStringExtra(EXTRA_STYLE) ?: "midnight"
         color = runCatching { Color.parseColor(intent?.getStringExtra(EXTRA_COLOR) ?: "#7C5CFC") }
             .getOrDefault(Color.parseColor("#7C5CFC"))
-        excludedPackages = intent?.getStringExtra(EXTRA_EXCLUDED_PACKAGES).orEmpty()
-            .split(",", "\n").map { it.trim().lowercase() }.filter { it.isNotEmpty() }.toSet()
         addShield(imageUri)
-        scheduleSensitiveAppCheck()
         return START_STICKY
     }
 
@@ -110,33 +102,6 @@ class ShieldService : Service() {
 
     private fun withAlpha(value: Int, alpha: Int): Int = (value and 0x00FFFFFF) or (alpha shl 24)
 
-    private fun scheduleSensitiveAppCheck() {
-        handler.post(object : Runnable {
-            override fun run() {
-                val shouldPause = isSensitiveAppInForeground()
-                if (shouldPause != pausedForSensitiveApp) {
-                    pausedForSensitiveApp = shouldPause
-                    if (shouldPause) animateShield(false) else if (lastAway) animateShield(true)
-                }
-                handler.postDelayed(this, 700)
-            }
-        })
-    }
-
-    private fun isSensitiveAppInForeground(): Boolean {
-        val manager = getSystemService(USAGE_STATS_SERVICE) as UsageStatsManager
-        val events = manager.queryEvents(System.currentTimeMillis() - 3000, System.currentTimeMillis())
-        val event = UsageEvents.Event()
-        var currentPackage = ""
-        while (events.hasNextEvent()) {
-            events.getNextEvent(event)
-            if (event.eventType == UsageEvents.Event.MOVE_TO_FOREGROUND) currentPackage = event.packageName
-        }
-        if (currentPackage == packageName) return false
-        val blocked = setOf("sparkasse", "banking", "authenticator", "authentication", "bankid", "com.google.android.apps.authenticator2")
-        return (blocked + excludedPackages).any { token -> currentPackage.lowercase().contains(token) }
-    }
-
     private fun animateShield(on: Boolean) {
         val v = shield ?: return
         handler.post {
@@ -175,7 +140,7 @@ class ShieldService : Service() {
                     val right = face?.rightEyeOpenProbability ?: 0f
                     val rot = face?.headEulerAngleY ?: 999f
                     val looking = face != null && left > 0.35f && right > 0.35f && abs(rot) < 18f
-                    if (!looking && !pausedForSensitiveApp) {
+                    if (!looking) {
                         if (awaySince == 0L) awaySince = SystemClock.uptimeMillis()
                         if (!lastAway && SystemClock.uptimeMillis() - awaySince > 280) {
                             lastAway = true; animateShield(true)

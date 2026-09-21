@@ -39,13 +39,6 @@
         <Button android:id="@+id/imageButton" android:layout_width="match_parent"
             android:layout_height="wrap_content" android:layout_marginTop="16dp"
             android:text="Choose image protection"/>
-        <EditText android:id="@+id/excludedPackages" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_marginTop="10dp"
-            android:hint="Extra app packages to pause, comma separated"
-            android:inputType="text" android:textColor="#F4F6FA" android:textColorHint="#7A879B"/>
-        <Button android:id="@+id/usagePermissionButton" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_marginTop="6dp"
-            android:text="Allow sensitive-app pause (optional)"/>
         <Button android:id="@+id/permissionButton" android:layout_width="match_parent"
             android:layout_height="wrap_content" android:layout_marginTop="10dp"
             android:text="Set up permissions"/>

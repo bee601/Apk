@@ -23,7 +23,6 @@ class MainActivity : ComponentActivity() {
     private lateinit var permissionStatus: TextView
     private lateinit var imagePreview: ImageView
     private lateinit var hexInput: EditText
-    private lateinit var excludedPackages: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +31,6 @@ class MainActivity : ComponentActivity() {
         permissionStatus = findViewById(R.id.permissionStatus)
         imagePreview = findViewById(R.id.imagePreview)
         hexInput = findViewById(R.id.hexInput)
-        excludedPackages = findViewById(R.id.excludedPackages)
         refreshPermissionStatus()
         loadSelectedImage()
         loadSettings()
@@ -43,10 +41,6 @@ class MainActivity : ComponentActivity() {
         findViewById<Button>(R.id.permissionButton).setOnClickListener {
             startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                 Uri.parse("package:$packageName")))
-        }
-
-        findViewById<Button>(R.id.usagePermissionButton).setOnClickListener {
-            startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
         }
 
         findViewById<Button>(R.id.imageButton).setOnClickListener {
@@ -109,19 +103,14 @@ class MainActivity : ComponentActivity() {
         }
         intent.putExtra(ShieldService.EXTRA_STYLE, selectedStyle())
         intent.putExtra(ShieldService.EXTRA_COLOR, normalizedColor())
-        intent.putExtra(ShieldService.EXTRA_EXCLUDED_PACKAGES, excludedPackages.text.toString())
         ContextCompat.startForegroundService(this, intent)
     }
 
     private fun refreshPermissionStatus() {
         val overlay = Settings.canDrawOverlays(this)
         val camera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
-        val usage = getSystemService(android.app.AppOpsManager::class.java).unsafeCheckOpNoThrow(
-            android.app.AppOpsManager.OPSTR_GET_USAGE_STATS,
-            android.os.Process.myUid(), packageName
-        ) == android.app.AppOpsManager.MODE_ALLOWED
         permissionStatus.text = if (overlay && camera) {
-            "READY  ·  on-device only  ·  sensitive apps ${if (usage) "paused" else "optional"}"
+            "READY  ·  on-device only"
         } else {
             "SETUP NEEDED  ·  camera ${if (camera) "ready" else "off"}  ·  overlay ${if (overlay) "ready" else "off"}"
         }
@@ -142,14 +131,12 @@ class MainActivity : ComponentActivity() {
         getPreferences(MODE_PRIVATE).edit()
             .putString("shield_style", selectedStyle())
             .putString("shield_color", normalizedColor())
-            .putString("excluded_packages", excludedPackages.text.toString())
             .apply()
     }
 
     private fun loadSettings() {
         val preferences = getPreferences(MODE_PRIVATE)
         hexInput.setText(preferences.getString("shield_color", "#7C5CFC"))
-        excludedPackages.setText(preferences.getString("excluded_packages", ""))
         when (preferences.getString("shield_style", "midnight")) {
             "aurora" -> findViewById<RadioGroup>(R.id.styleGroup).check(R.id.styleAurora)
             "paper" -> findViewById<RadioGroup>(R.id.styleGroup).check(R.id.stylePaper)

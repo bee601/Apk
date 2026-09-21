@@ -2,7 +2,6 @@ R_DEF: Internal format may change without notice
 local
 anim fade_slide_up
 id content
-id excludedPackages
 id hexInput
 id imageButton
 id imagePreview
@@ -14,6 +13,5 @@ id styleAurora
 id styleGroup
 id styleMidnight
 id stylePaper
-id usagePermissionButton
 layout activity_main
 style AppTheme

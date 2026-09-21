@@ -12,7 +12,6 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
-    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
 
     <permission
         android:name="com.example.lookawayshield.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
