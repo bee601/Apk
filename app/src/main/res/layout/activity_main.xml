@@ -1,19 +1,59 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:padding="24dp">
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:text="Look Away Shield" android:textSize="28sp" android:textStyle="bold"/>
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="On-device face tracking. When you look away, a fluid privacy shield covers the current app."
-        android:textSize="16sp"/>
-    <Button android:id="@+id/permissionButton" android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:layout_marginTop="24dp"
-        android:text="Grant overlay permission"/>
-    <Button android:id="@+id/startButton" android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:layout_marginTop="12dp"
-        android:text="Start Shield"/>
-    <Button android:id="@+id/stopButton" android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:layout_marginTop="12dp"
-        android:text="Stop Shield"/>
-</LinearLayout>
+    android:background="#10131A">
+    <LinearLayout android:id="@+id/content" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp">
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="LOOK AWAY SHIELD  /  PRIVATE MODE" android:textColor="#A8B3C7" android:textSize="12sp"
+            android:letterSpacing="0.16" android:textStyle="bold"/>
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" android:text="Privacy, with your own visual language."
+            android:textColor="#F4F6FA" android:textSize="30sp" android:textStyle="bold"/>
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" android:text="Choose a mood, tint it with a hex color, or use your own image. Face analysis stays on this device."
+            android:textColor="#A8B3C7" android:textSize="16sp"/>
+        <TextView android:id="@+id/permissionStatus" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="20dp"
+            android:background="#1D3A36" android:padding="14dp" android:textColor="#8DE2BE"
+            android:textSize="14sp" android:textStyle="bold"/>
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="22dp" android:text="SHIELD DESIGN" android:textColor="#A8B3C7"
+            android:textSize="12sp" android:textStyle="bold"/>
+        <RadioGroup android:id="@+id/styleGroup" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="horizontal">
+            <RadioButton android:id="@+id/styleMidnight" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:checked="true" android:text="Midnight"
+                android:textColor="#F4F6FA"/>
+            <RadioButton android:id="@+id/styleAurora" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="Aurora" android:textColor="#F4F6FA"/>
+            <RadioButton android:id="@+id/stylePaper" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="Paper" android:textColor="#F4F6FA"/>
+        </RadioGroup>
+        <EditText android:id="@+id/hexInput" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="8dp"
+            android:hint="#7C5CFC" android:inputType="text" android:textColor="#F4F6FA"
+            android:textColorHint="#7A879B"/>
+        <ImageView android:id="@+id/imagePreview" android:layout_width="match_parent"
+            android:layout_height="180dp" android:layout_marginTop="20dp" android:contentDescription="Selected shield image"
+            android:scaleType="centerCrop" android:visibility="gone"/>
+        <Button android:id="@+id/imageButton" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="16dp"
+            android:text="Choose image protection"/>
+        <EditText android:id="@+id/excludedPackages" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="10dp"
+            android:hint="Extra app packages to pause, comma separated"
+            android:inputType="text" android:textColor="#F4F6FA" android:textColorHint="#7A879B"/>
+        <Button android:id="@+id/usagePermissionButton" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="6dp"
+            android:text="Allow sensitive-app pause (optional)"/>
+        <Button android:id="@+id/permissionButton" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="10dp"
+            android:text="Set up permissions"/>
+        <Button android:id="@+id/startButton" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="10dp"
+            android:text="Start Shield"/>
+        <Button android:id="@+id/stopButton" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="10dp"
+            android:text="Stop Shield"/>
+    </LinearLayout>
+</ScrollView>

@@ -27,6 +27,7 @@ anim design_bottom_sheet_slide_in
 anim design_bottom_sheet_slide_out
 anim design_snackbar_in
 anim design_snackbar_out
+anim fade_slide_up
 anim fragment_fast_out_extra_slow_in
 anim linear_indeterminate_line1_head_interpolator
 anim linear_indeterminate_line1_tail_interpolator
@@ -3207,6 +3208,7 @@ id endToStart
 id enterAlways
 id enterAlwaysCollapsed
 id escape
+id excludedPackages
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
@@ -3237,6 +3239,7 @@ id graph_wrap
 id group_divider
 id groups
 id header_title
+id hexInput
 id hide_ime_id
 id hideable
 id home
@@ -3249,6 +3252,8 @@ id ifRoom
 id ignore
 id ignoreRequest
 id image
+id imageButton
+id imagePreview
 id indeterminate
 id info
 id invisible
@@ -3372,6 +3377,7 @@ id peekHeight
 id percent
 id performance
 id permissionButton
+id permissionStatus
 id pin
 id position
 id postLayout
@@ -3444,6 +3450,10 @@ id staticPostLayout
 id stop
 id stopButton
 id stretch
+id styleAurora
+id styleGroup
+id styleMidnight
+id stylePaper
 id submenuarrow
 id submit_area
 id tabMode
@@ -3499,6 +3509,7 @@ id unchecked
 id uniform
 id unlabeled
 id up
+id usagePermissionButton
 id useLogo
 id view_offset_helper
 id view_tree_lifecycle_owner
