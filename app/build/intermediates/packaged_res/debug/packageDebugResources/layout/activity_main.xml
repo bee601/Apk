@@ -1,0 +1,19 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:padding="24dp">
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="Look Away Shield" android:textSize="28sp" android:textStyle="bold"/>
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="On-device face tracking. When you look away, a fluid privacy shield covers the current app."
+        android:textSize="16sp"/>
+    <Button android:id="@+id/permissionButton" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_marginTop="24dp"
+        android:text="Grant overlay permission"/>
+    <Button android:id="@+id/startButton" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_marginTop="12dp"
+        android:text="Start Shield"/>
+    <Button android:id="@+id/stopButton" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_marginTop="12dp"
+        android:text="Stop Shield"/>
+</LinearLayout>
