@@ -1,161 +1,102 @@
 package com.example.lookawayshield
 
-import android.Manifest
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
+import android.app.AlertDialog
+import android.graphics.Color
 import android.os.Bundle
-import android.provider.Settings
+import android.view.Gravity
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
-import android.widget.RadioGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.ComponentActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class MainActivity : ComponentActivity() {
-    private val req = 42
-    private val imagePicker = 43
-    private lateinit var permissionStatus: TextView
-    private lateinit var imagePreview: ImageView
-    private lateinit var hexInput: EditText
+    private val accent = Color.rgb(255, 176, 240)
+    private val habits = mutableListOf("Morning walk", "Read 20 pages", "Drink 2L water")
+    private val completed = mutableSetOf<String>()
+    private lateinit var habitList: LinearLayout
+    private lateinit var progressLabel: TextView
+    private lateinit var streakLabel: TextView
+    private lateinit var prefs: android.content.SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        permissionStatus = findViewById(R.id.permissionStatus)
-        imagePreview = findViewById(R.id.imagePreview)
-        hexInput = findViewById(R.id.hexInput)
-        refreshPermissionStatus()
-        loadSelectedImage()
-        loadSettings()
-        findViewById<View>(R.id.content).startAnimation(
-            AnimationUtils.loadAnimation(this, R.anim.fade_slide_up)
-        )
-
-        findViewById<Button>(R.id.permissionButton).setOnClickListener {
-            startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                Uri.parse("package:$packageName")))
-        }
-
-        findViewById<Button>(R.id.targetPermissionButton).setOnClickListener {
-            startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
-        }
-
-        findViewById<Button>(R.id.imageButton).setOnClickListener {
-            startActivityForResult(
-                Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                    type = "image/*"
-                    addCategory(Intent.CATEGORY_OPENABLE)
-                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
-                }, imagePicker
-            )
-        }
-
-        findViewById<Button>(R.id.startButton).setOnClickListener {
-            if (!Settings.canDrawOverlays(this)) {
-                refreshPermissionStatus()
-                startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:$packageName")))
-                return@setOnClickListener
-            }
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), req)
-            } else startShield()
-        }
-
-        findViewById<Button>(R.id.stopButton).setOnClickListener {
-            stopService(Intent(this, ShieldService::class.java))
-        }
+        prefs = getPreferences(MODE_PRIVATE)
+        habits.addAll(prefs.getStringSet("habits", emptySet()).orEmpty().filter { it !in habits })
+        restoreToday()
+        habitList = findViewById(R.id.habitList)
+        progressLabel = findViewById(R.id.progressLabel)
+        streakLabel = findViewById(R.id.streakLabel)
+        findViewById<TextView>(R.id.dateLabel).text = SimpleDateFormat("EEEE, d MMMM", Locale.US)
+            .format(Date()).uppercase(Locale.US)
+        findViewById<View>(R.id.content).startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_slide_up))
+        findViewById<View>(R.id.addHabit).setOnClickListener { showAddHabitDialog() }
+        renderHabits()
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (::permissionStatus.isInitialized) refreshPermissionStatus()
-    }
-
-    @Deprecated("Deprecated in Android API  Activity Result APIs are not used in this prototype")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == imagePicker && resultCode == RESULT_OK) {
-            data?.data?.let { uri ->
-                runCatching {
-                    contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    private fun renderHabits() {
+        habitList.removeAllViews()
+        habits.forEachIndexed { index, habit ->
+            val row = CheckBox(this).apply {
+                text = habit
+                textSize = 16f
+                setTextColor(Color.WHITE)
+                buttonTintList = android.content.res.ColorStateList.valueOf(accent)
+                setPadding(12, 4, 12, 4)
+                isChecked = habit in completed
+                setOnCheckedChangeListener { _, checked ->
+                    if (checked) completed.add(habit) else completed.remove(habit)
+                    saveToday(); updateSummary()
                 }
-                getPreferences(MODE_PRIVATE).edit().putString("shield_image", uri.toString()).apply()
-                showSelectedImage(uri)
             }
+            val card = LinearLayout(this).apply {
+                gravity = Gravity.CENTER_VERTICAL
+                setBackgroundResource(R.drawable.habit_card)
+                setPadding(8, 8, 8, 8)
+                addView(row, LinearLayout.LayoutParams(-1, 64))
+                alpha = 0f
+                translationY = 18f
+                animate().alpha(1f).translationY(0f).setStartDelay(index * 70L).setDuration(360).start()
+            }
+            habitList.addView(card, LinearLayout.LayoutParams(-1, 76).apply { bottomMargin = 10 })
         }
+        updateSummary()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, results: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, results)
-        if (requestCode == req && results.firstOrNull() == PackageManager.PERMISSION_GRANTED) startShield()
+    private fun updateSummary() {
+        val done = completed.size
+        progressLabel.text = "$done / ${habits.size} complete"
+        streakLabel.text = "${prefs.getInt("streak", 4)} day streak"
+        findViewById<View>(R.id.progressBar).setBackgroundColor(accent)
+        findViewById<View>(R.id.progressBar).layoutParams.width =
+            (resources.displayMetrics.widthPixels - 48) * done.coerceAtMost(habits.size) / habits.size.coerceAtLeast(1)
+        findViewById<View>(R.id.progressBar).requestLayout()
     }
 
-    private fun startShield() {
-        val intent = Intent(this, ShieldService::class.java)
-        saveSettings()
-        getPreferences(MODE_PRIVATE).getString("shield_image", null)?.let {
-            intent.putExtra(ShieldService.EXTRA_IMAGE_URI, it)
-        }
-        intent.putExtra(ShieldService.EXTRA_STYLE, selectedStyle())
-        intent.putExtra(ShieldService.EXTRA_COLOR, normalizedColor())
-        ContextCompat.startForegroundService(this, intent)
+    private fun showAddHabitDialog() {
+        val input = EditText(this).apply { hint = "e.g. Stretch for 5 minutes"; setSingleLine() }
+        AlertDialog.Builder(this).setTitle("New habit").setView(input)
+            .setNegativeButton("Cancel", null)
+            .setPositiveButton("Add") { _, _ ->
+                input.text.toString().trim().takeIf { it.isNotEmpty() }?.let {
+                    habits.add(it); prefs.edit().putStringSet("habits", habits.toSet()).apply(); renderHabits()
+                }
+            }.show()
     }
 
-    private fun refreshPermissionStatus() {
-        val overlay = Settings.canDrawOverlays(this)
-        val camera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
-        permissionStatus.text = if (overlay && camera) {
-            "READY  ·  on-device only"
-        } else {
-            "SETUP NEEDED  ·  camera ${if (camera) "ready" else "off"}  ·  overlay ${if (overlay) "ready" else "off"}"
-        }
+    private fun todayKey() = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
+
+    private fun restoreToday() {
+        completed.addAll(prefs.getStringSet("done_${todayKey()}", emptySet()).orEmpty())
     }
 
-    private fun selectedStyle(): String = when (findViewById<RadioGroup>(R.id.styleGroup).checkedRadioButtonId) {
-        R.id.styleAurora -> "aurora"
-        R.id.stylePaper -> "paper"
-        else -> "midnight"
-    }
-
-    private fun normalizedColor(): String {
-        val value = hexInput.text.toString().trim().removePrefix("#")
-        return if (value.matches(Regex("[0-9a-fA-F]{6}"))) "#$value" else "#7C5CFC"
-    }
-
-    private fun saveSettings() {
-        getPreferences(MODE_PRIVATE).edit()
-            .putString("shield_style", selectedStyle())
-            .putString("shield_color", normalizedColor())
-            .apply()
-    }
-
-    private fun loadSettings() {
-        val preferences = getPreferences(MODE_PRIVATE)
-        hexInput.setText(preferences.getString("shield_color", "#7C5CFC"))
-        when (preferences.getString("shield_style", "midnight")) {
-            "aurora" -> findViewById<RadioGroup>(R.id.styleGroup).check(R.id.styleAurora)
-            "paper" -> findViewById<RadioGroup>(R.id.styleGroup).check(R.id.stylePaper)
-            else -> findViewById<RadioGroup>(R.id.styleGroup).check(R.id.styleMidnight)
-        }
-    }
-
-    private fun loadSelectedImage() {
-        getPreferences(MODE_PRIVATE).getString("shield_image", null)?.let {
-            runCatching { showSelectedImage(Uri.parse(it)) }
-        }
-    }
-
-    private fun showSelectedImage(uri: Uri) {
-        imagePreview.setImageURI(uri)
-        imagePreview.visibility = View.VISIBLE
+    private fun saveToday() {
+        prefs.edit().putStringSet("done_${todayKey()}", completed).putInt("streak", 4 + if (completed.isNotEmpty()) 1 else 0).apply()
     }
 }

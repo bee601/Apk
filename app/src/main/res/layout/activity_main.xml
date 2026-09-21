@@ -1,55 +1,27 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="#10131A">
-    <LinearLayout android:id="@+id/content" android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp">
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="LOOK AWAY SHIELD CLEAN  /  PRIVATE MODE" android:textColor="#A8B3C7" android:textSize="12sp"
-            android:letterSpacing="0.16" android:textStyle="bold"/>
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" android:text="Privacy, with your own visual language."
-            android:textColor="#F4F6FA" android:textSize="30sp" android:textStyle="bold"/>
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" android:text="Choose a mood, tint it with a hex color, or use your own image. Face analysis stays on this device."
-            android:textColor="#A8B3C7" android:textSize="16sp"/>
-        <TextView android:id="@+id/permissionStatus" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_marginTop="20dp"
-            android:background="#1D3A36" android:padding="14dp" android:textColor="#8DE2BE"
-            android:textSize="14sp" android:textStyle="bold"/>
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="22dp" android:text="SHIELD DESIGN" android:textColor="#A8B3C7"
-            android:textSize="12sp" android:textStyle="bold"/>
-        <RadioGroup android:id="@+id/styleGroup" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:orientation="horizontal">
-            <RadioButton android:id="@+id/styleMidnight" android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:checked="true" android:text="Midnight"
-                android:textColor="#F4F6FA"/>
-            <RadioButton android:id="@+id/styleAurora" android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="Aurora" android:textColor="#F4F6FA"/>
-            <RadioButton android:id="@+id/stylePaper" android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="Paper" android:textColor="#F4F6FA"/>
-        </RadioGroup>
-        <EditText android:id="@+id/hexInput" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_marginTop="8dp"
-            android:hint="#7C5CFC" android:inputType="text" android:textColor="#F4F6FA"
-            android:textColorHint="#7A879B"/>
-        <ImageView android:id="@+id/imagePreview" android:layout_width="match_parent"
-            android:layout_height="180dp" android:layout_marginTop="20dp" android:contentDescription="Selected shield image"
-            android:scaleType="centerCrop" android:visibility="gone"/>
-        <Button android:id="@+id/imageButton" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_marginTop="16dp"
-            android:text="Choose image protection"/>
-        <Button android:id="@+id/permissionButton" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_marginTop="10dp"
-            android:text="Set up permissions"/>
-        <Button android:id="@+id/targetPermissionButton" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_marginTop="10dp"
-            android:text="Allow target-app detection"/>
-        <Button android:id="@+id/startButton" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_marginTop="10dp"
-            android:text="Start Shield"/>
-        <Button android:id="@+id/stopButton" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_marginTop="10dp"
-            android:text="Stop Shield"/>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:background="#111014">
+    <LinearLayout android:id="@+id/content" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="24dp">
+        <TextView android:id="@+id/dateLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="TODAY"
+            android:textColor="#AFA6B3" android:textSize="12sp" android:letterSpacing="0.15" android:textStyle="bold"/>
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp"
+            android:text="Make it count." android:textColor="#FFF9FF" android:textSize="34sp" android:textStyle="bold"/>
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp"
+            android:text="Small actions. A better rhythm." android:textColor="#AFA6B3" android:textSize="16sp"/>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="150dp" android:layout_marginTop="24dp"
+            android:background="@drawable/summary_card" android:gravity="center_vertical" android:orientation="vertical" android:padding="20dp">
+            <TextView android:id="@+id/streakLabel" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="4 day streak" android:textColor="#111014" android:textSize="25sp" android:textStyle="bold"/>
+            <TextView android:id="@+id/progressLabel" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="5dp" android:text="0 / 3 complete" android:textColor="#4F3D4E" android:textSize="14sp"/>
+            <View android:layout_width="match_parent" android:layout_height="8dp" android:layout_marginTop="18dp" android:background="#FFE1F8"/>
+            <View android:id="@+id/progressBar" android:layout_width="0dp" android:layout_height="8dp" android:layout_marginTop="-8dp" android:background="#111014"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="28dp" android:gravity="center_vertical">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="TODAY" android:textColor="#AFA6B3" android:textSize="12sp" android:textStyle="bold"/>
+            <TextView android:id="@+id/addHabit" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/add_button" android:padding="10dp" android:text="+  New habit" android:textColor="#111014" android:textStyle="bold"/>
+        </LinearLayout>
+        <LinearLayout android:id="@+id/habitList" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:orientation="vertical"/>
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:text="Your progress is private and stored only on this device." android:textColor="#756D78" android:textSize="12sp"/>
     </LinearLayout>
 </ScrollView>

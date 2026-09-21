@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.lookawayshield.app-mergeDebugResources-38:/values-v31/values-v31.xml",
+            "outputFile": "com.example.lookawayshield.app-mergeDebugResources-30:/values-v31/values-v31.xml",
             "map": [
                 {
                     "source": "/home/codespace/.gradle/caches/9.7.1/transforms/97f58a8df6bbdff758c974bf9782916d/transformed/material-1.12.0/res/values-v31/values-v31.xml",

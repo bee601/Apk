@@ -1,18 +1,15 @@
 R_DEF: Internal format may change without notice
 local
 anim fade_slide_up
+drawable add_button
+drawable habit_card
+drawable summary_card
+id addHabit
 id content
-id hexInput
-id imageButton
-id imagePreview
-id permissionButton
-id permissionStatus
-id startButton
-id stopButton
-id styleAurora
-id styleGroup
-id styleMidnight
-id stylePaper
-id targetPermissionButton
+id dateLabel
+id habitList
+id progressBar
+id progressLabel
+id streakLabel
 layout activity_main
 style AppTheme

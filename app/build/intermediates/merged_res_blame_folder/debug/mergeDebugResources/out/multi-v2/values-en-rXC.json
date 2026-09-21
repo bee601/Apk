@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.lookawayshield.app-mergeDebugResources-38:/values-en-rXC/values-en-rXC.xml",
+            "outputFile": "com.example.lookawayshield.app-mergeDebugResources-30:/values-en-rXC/values-en-rXC.xml",
             "map": [
                 {
                     "source": "/home/codespace/.gradle/caches/9.7.1/transforms/2ec049a9321e11472145be04cb0d7fa0/transformed/core-1.15.0/res/values-en-rXC/values-en-rXC.xml",

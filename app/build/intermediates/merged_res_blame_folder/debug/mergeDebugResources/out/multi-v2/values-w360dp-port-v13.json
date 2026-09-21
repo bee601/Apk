@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.lookawayshield.app-mergeDebugResources-38:/values-w360dp-port-v13/values-w360dp-port-v13.xml",
+            "outputFile": "com.example.lookawayshield.app-mergeDebugResources-30:/values-w360dp-port-v13/values-w360dp-port-v13.xml",
             "map": [
                 {
                     "source": "/home/codespace/.gradle/caches/9.7.1/transforms/97f58a8df6bbdff758c974bf9782916d/transformed/material-1.12.0/res/values-w360dp-port-v13/values-w360dp-port-v13.xml",
